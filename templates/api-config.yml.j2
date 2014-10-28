@@ -1,0 +1,121 @@
+# The region for which all metrics passing through this server will be persisted
+region: {{api_region}}
+
+# Whether this server is running on a secure port
+accessedViaHttps: false
+
+# Topic for publishing metrics to
+metricsTopic: metrics
+
+# Topic for publishing domain events to
+eventsTopic: events
+
+kafka:
+  brokerUris: 
+{% for host in kafka_hosts.split(',') %}
+    - {{host}}
+{% endfor %}
+  zookeeperUris:
+{% for host in zookeeper_hosts.split(',') %}
+    - {{host}}
+{% endfor %}
+  healthCheckTopic: healthcheck
+
+mysql:
+  driverClass: com.mysql.jdbc.Driver
+  url: jdbc:mysql://{{mysql_host}}:3306/{{mysql_db}}?connectTimeout=5000&autoReconnect=true
+  user: {{mysql_user}}
+  password: {{mysql_password}}
+  maxWaitForConnection: 1s
+  validationQuery: "/* MyService Health Check */ SELECT 1"
+  minSize: 8
+  maxSize: 32
+  checkConnectionWhileIdle: false
+  checkConnectionOnBorrow: true
+
+databaseConfiguration:
+  databaseType: influxdb
+
+# Uncomment if databaseType is influxDB
+influxDB:
+  name: {{influxdb_db}}
+  replicationFactor: 1
+  url: http://{{influxdb_host}}:8086
+  user: {{influxdb_user}}
+  password: {{influxdb_password}}
+
+# Uncomment if databaseType is vertica
+# As of 7/10 there is a bug in the monasca-api that requires this section even if databaseType is set to influxdb
+vertica:
+  driverClass: com.vertica.jdbc.Driver
+  url: jdbc:vertica://localhost/mon
+  user: dbadmin
+  password: password
+  maxWaitForConnection: 1s
+  validationQuery: "/* MyService Health Check */ SELECT 1"
+  minSize: 4
+  maxSize: 32
+  checkConnectionWhileIdle: false  
+
+middleware:
+  enabled: true
+  serviceIds: 100
+  endpointIds: 160
+  serverVIP: {{keystone_host}}
+  serverPort: 5000
+  connTimeout: 500
+  connSSLClientAuth: true
+  connPoolMaxActive: 3
+  connPoolMaxIdle: 3
+  connPoolEvictPeriod: 600000
+  connPoolMinIdleTime: 600000
+  connRetryTimes: 2
+  connRetryInterval: 50
+  defaultAuthorizedRoles: [user, domainuser, domainadmin,_member_]
+  agentAuthorizedRoles: [monasca-agent]
+  adminAuthMethod: {{keystone_auth_method}}
+  adminUser: {{keystone_admin}}
+  adminPassword: {{keystone_admin_password}}
+  adminToken: {{keystone_admin_token}}
+  timeToCacheToken: 600
+  maxTokenCacheSize: 1048576
+
+server:
+  applicationConnectors:
+    - type: http
+      maxRequestHeaderSize: 16KiB  # Allow large headers used by keystone tokens
+
+# Logging settings.
+logging:
+
+  # The default level of all loggers. Can be OFF, ERROR, WARN, INFO, DEBUG, TRACE, or ALL.
+  level: INFO
+
+  # Logger-specific levels.
+  loggers:
+
+    # Sets the level for 'com.example.app' to DEBUG.
+    com.example.app: DEBUG
+
+  appenders:
+    - type: console
+      threshold: ALL
+      timeZone: UTC
+      target: stdout
+      logFormat: # TODO
+
+    - type: file
+      currentLogFilename: {{monasca_log_dir}}/monasca-api.log
+      threshold: ALL
+      archive: true
+      archivedLogFilenamePattern: {{monasca_log_dir}}/monasca-api-%d.log.gz
+      archivedFileCount: 5
+      timeZone: UTC
+      logFormat: # TODO
+
+    - type: syslog
+      host: localhost
+      port: 514
+      facility: local0
+      threshold: ALL
+      logFormat: # TODO

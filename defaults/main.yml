@@ -1,0 +1,5 @@
+---
+influxdb_db: mon
+keystone_auth_method: password
+monasca_log_dir: /var/log/monasca
+mysql_db: mon

@@ -1,0 +1,14 @@
+---
+galaxy_info:
+  author: Tim Kuhlman
+  description: Installs the monasca-api part of the Monasca project.
+  company: HP
+  license: Apache
+  min_ansible_version: 1.2
+  platforms:
+  - name: Ubuntu
+    versions:
+    - all
+  categories:
+  - monitoring
+dependencies: []
