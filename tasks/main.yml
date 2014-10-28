@@ -5,9 +5,9 @@
   user: name={{api_user}} system=yes group={{api_group}}
 
 - name: Add in custom apt key
-  apkt_key: url=https://region-a.geo-1.objects.hpcloudsvc.com/v1/46995959297574/mini-mon/public_repo/mon.gpg state=present
+  apt_key: url=https://region-a.geo-1.objects.hpcloudsvc.com/v1/46995959297574/mini-mon/public_repo/mon.gpg state=present
 - name: Add in custom apt repo
-  apt_repository: repo='deb https://region-a.geo-1.objects.hpcloudsvc.com/v1/46995959297574/mini-mon/public_repo precise release' state=prsent
+  apt_repository: repo='deb https://region-a.geo-1.objects.hpcloudsvc.com/v1/46995959297574/mini-mon/public_repo precise release' state=present
 
 - name: Install monasca-api
   apt: name=monasca-api state=latest
@@ -18,6 +18,6 @@
   file: path={{monasca_log_dir}} state=directory owner=root group={{api_group}} mode=775
 
 - name: create conf_file from template
-  template: dest={{api_conf_file}} owner={{api_user}} group={{api_group}} mode=640 src=api-confi.yml.j2
+  template: dest={{api_conf_file}} owner={{api_user}} group={{api_group}} mode=640 src=api-config.yml.j2
   notify:
     - restart monasca-api
