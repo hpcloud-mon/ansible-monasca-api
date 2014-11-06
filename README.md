@@ -10,11 +10,16 @@ Installs the [monasca-api](https://github.com/stackforge/monasca-api) part of th
 - keystone_host
 - keystone_admin
 - keystone_admin_password
-- keystone_admin_token
 - mysql_host
 - mysql_user
 - mysql_password
 - zookeeper_hosts - comma separated list of host:port combinations
+
+##Optional parameters
+These all default to an empty value
+- keystone_admin_token
+- monasca_api_truststore - The role will not upload this file it must be put in place before the role is run
+- monasca_api_truststore_password
 
 ##License
 Apache

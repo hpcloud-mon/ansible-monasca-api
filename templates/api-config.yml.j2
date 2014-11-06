@@ -59,6 +59,8 @@ vertica:
 
 middleware:
   enabled: true
+  truststore: {{monasca_api_truststore}}
+  truststorePassword: {{monasca_api_truststore_password}}
   serviceIds: 100
   endpointIds: 160
   serverVIP: {{keystone_host}}
