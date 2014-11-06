@@ -2,6 +2,7 @@
 influxdb_db: mon
 keystone_auth_method: password
 keystone_admin_token:
+keystone_port: 5000
 monasca_api_truststore:
 monasca_api_truststore_password:
 monasca_log_dir: /var/log/monasca
