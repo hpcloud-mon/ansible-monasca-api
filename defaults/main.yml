@@ -3,7 +3,11 @@ influxdb_db: mon
 keystone_auth_method: password
 keystone_admin_token:
 keystone_port: 5000
+keystone_use_https: false
+keystone_client_auth: false
 monasca_api_truststore:
 monasca_api_truststore_password:
+monasca_api_keystore:
+monasca_api_keystore_password:
 monasca_log_dir: /var/log/monasca
 mysql_db: mon

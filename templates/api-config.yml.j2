@@ -59,14 +59,15 @@ vertica:
 
 middleware:
   enabled: true
-  truststore: {{monasca_api_truststore}}
-  truststorePassword: {{monasca_api_truststore_password}}
-  serviceIds: 100
-  endpointIds: 160
   serverVIP: {{keystone_host}}
   serverPort: {{keystone_port}}
+  useHttps: {{keystone_use_https}}
+  truststore: {{monasca_api_truststore}}
+  truststorePassword: {{monasca_api_truststore_password}}
   connTimeout: 500
-  connSSLClientAuth: true
+  connSSLClientAuth: {{keystone_client_auth}}
+  keystore: {{monasca_api_keystore}}
+  keystorePassword: {{monasca_api_keystore_password}}
   connPoolMaxActive: 3
   connPoolMaxIdle: 3
   connPoolEvictPeriod: 600000
