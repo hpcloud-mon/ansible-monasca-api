@@ -1,4 +1,4 @@
 ---
 api_user: monasca_api
-api_group: monasca
+monasca_group: monasca
 api_conf_file: /etc/monasca/api-config.yml
