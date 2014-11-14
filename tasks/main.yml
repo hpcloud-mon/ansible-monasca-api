@@ -1,8 +1,8 @@
 ---
 - name: setup group
-  group: name={{api_group}} system=yes
+  group: name={{monasca_group}} system=yes
 - name: Setup user
-  user: name={{api_user}} system=yes group={{api_group}}
+  user: name={{api_user}} system=yes group={{monasca_group}}
 
 - name: Add in custom apt key
   apt_key: url=https://region-a.geo-1.objects.hpcloudsvc.com/v1/46995959297574/mini-mon/public_repo/mon.gpg state=present
@@ -15,9 +15,9 @@
     - restart monasca-api
 
 - name: create log_dir
-  file: path={{monasca_log_dir}} state=directory owner=root group={{api_group}} mode=775
+  file: path={{monasca_log_dir}} state=directory owner=root group={{monasca_group}} mode=775
 
 - name: create conf_file from template
-  template: dest={{api_conf_file}} owner={{api_user}} group={{api_group}} mode=640 src=api-config.yml.j2
+  template: dest={{api_conf_file}} owner={{api_user}} group={{monasca_group}} mode=640 src=api-config.yml.j2
   notify:
     - restart monasca-api

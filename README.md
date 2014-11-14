@@ -21,6 +21,18 @@ These all default to an empty value
 - monasca_api_truststore - The role will not upload this file it must be put in place before the role is run
 - monasca_api_truststore_password
 
+##Example Playbook
+
+    hosts: monasca
+    sudo: yes
+    roles:
+      - {role: tkuhlman.monasca-api,
+         influxdb_user: "{{api_influxdb_user}}",
+         influxdb_password: "{{api_influxdb_password}}",
+         mysql_user: "{{api_mysql_user}}",
+         mysql_password: "{{api_mysql_password}}",
+         tags: [api]}
+
 ##License
 Apache
 
