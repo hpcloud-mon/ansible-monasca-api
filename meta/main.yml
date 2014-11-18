@@ -4,11 +4,14 @@ galaxy_info:
   description: Installs the monasca-api part of the Monasca project.
   company: HP
   license: Apache
-  min_ansible_version: 1.2
+  min_ansible_version: 1.7
   platforms:
   - name: Ubuntu
     versions:
-    - all
+    - trusty
+  - name: Debian
+    versions:
+    - jessie
   categories:
   - monitoring
 dependencies: []

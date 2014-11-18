@@ -1,0 +1,13 @@
+[Unit]
+Description=Monasca Api
+After=kafka.service influxdb.service mysql.service
+
+[Service]
+Type=simple
+User=monasca_api
+Group=monasca
+Restart=on-failure
+ExecStart=/usr/bin/java -Xmx8g -cp /opt/monasca/monasca-api.jar:/opt/monasca/vertica/vertica_jdbc.jar monasca.api.MonApiApplication server /etc/monasca/api-config.yml
+
+[Install]
+WantedBy=multi-user.target

@@ -2,3 +2,4 @@
 api_user: monasca_api
 monasca_group: monasca
 api_conf_file: /etc/monasca/api-config.yml
+api_systemd_service: /etc/systemd/system/monasca-api.service
