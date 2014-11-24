@@ -15,12 +15,14 @@
   apt: name=monasca-api state=latest
   notify:
     - restart monasca-api
+    - wait for api port
 
 # As this is still distributed with a deb the upstart script comes with the deb so only the systemd script is here
 - name: create systemd config
   copy: dest={{api_systemd_service}} owner=root group=root mode=644 src=monasca-api.service
   notify:
     - restart monasca-api
+    - wait for api port
   when: ansible_distribution_release != 'trusty'
 
 - name: create log_dir
@@ -30,3 +32,4 @@
   template: dest={{api_conf_file}} owner={{api_user}} group={{monasca_group}} mode=640 src=api-config.yml.j2
   notify:
     - restart monasca-api
+    - wait for api port

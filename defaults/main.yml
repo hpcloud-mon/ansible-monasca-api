@@ -1,4 +1,5 @@
 ---
+api_client_port: 8080
 influxdb_db: mon
 keystone_auth_method: password
 keystone_admin_token:
