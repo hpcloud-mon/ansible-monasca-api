@@ -65,8 +65,8 @@ middleware:
   truststorePassword: {{monasca_api_truststore_password}}
   connTimeout: 500
   connSSLClientAuth: {{keystone_client_auth}}
-  keystore: {{monasca_api_keystore}}
-  keystorePassword: {{monasca_api_keystore_password}}
+  keystore: {{monasca_api_client_keystore}}
+  keystorePassword: {{monasca_api_client_keystore_password}}
   connPoolMaxActive: 3
   connPoolMaxIdle: 3
   connPoolEvictPeriod: 600000
@@ -84,7 +84,15 @@ middleware:
 
 server:
   applicationConnectors:
+{% if monasca_api_keystore is defined %}
+    - type: https
+      keyStorePath: {{ monasca_api_keystore }}
+      keyStorePassword: {{ monasca_api_keystore_password }}
+      validateCerts: false
+{% else %}
     - type: http
+{% endif %}
+      port: {{ monasca_api_client_port }}
       maxRequestHeaderSize: 16KiB  # Allow large headers used by keystone tokens
 
 # Logging settings.
