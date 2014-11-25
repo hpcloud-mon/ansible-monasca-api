@@ -10,7 +10,6 @@ monasca_api_client_keystore:
 monasca_api_client_keystore_password:
 monasca_api_truststore:
 monasca_api_truststore_password:
-monasca_api_keystore:
 monasca_api_keystore_password:
 monasca_log_dir: /var/log/monasca
 mysql_db: mon
