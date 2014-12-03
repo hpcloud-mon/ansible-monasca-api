@@ -10,7 +10,7 @@ Installs the [monasca-api](https://github.com/stackforge/monasca-api) part of th
 - keystone_host
 - keystone_admin
 - keystone_admin_password
-- mysql_host
+- mysql_host - SSL will be used if available
 - mysql_user
 - mysql_password
 - zookeeper_hosts - comma separated list of host:port combinations

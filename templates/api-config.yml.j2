@@ -23,7 +23,7 @@ kafka:
 
 mysql:
   driverClass: com.mysql.jdbc.Driver
-  url: jdbc:mysql://{{mysql_host}}:3306/{{mysql_db}}?connectTimeout=5000&autoReconnect=true
+  url: jdbc:mysql://{{mysql_host}}:3306/{{mysql_db}}?connectTimeout=5000&autoReconnect=true&useSSL=true
   user: {{mysql_user}}
   password: {{mysql_password}}
   maxWaitForConnection: 1s
