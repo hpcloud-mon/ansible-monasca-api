@@ -3,7 +3,7 @@ Installs the [monasca-api](https://github.com/stackforge/monasca-api) part of th
 
 ##Requirements
 - api_region 
-- influxdb_host
+- influxdb_url
 - influxdb_user
 - influxdb_password
 - kafka_hosts - comma separated list of host:port combinations
