@@ -1,6 +1,3 @@
 ---
 - name: restart monasca-api
-  service: name=monasca-api state=restarted enabled=yes
-
-- name: wait for api port
-  wait_for: port={{monasca_api_client_port}} state=started
+  service: name=monasca-api state=restarted
