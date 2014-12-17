@@ -4,13 +4,6 @@
 - name: Setup user
   user: name={{api_user}} system=yes group={{monasca_group}}
 
-- name: Make sure apt https is availble
-  apt: name=apt-transport-https state=present
-- name: Add in custom apt key
-  apt_key: url=https://region-a.geo-1.objects.hpcloudsvc.com/v1/46995959297574/mini-mon/public_repo/mon.gpg state=present
-- name: Add in custom apt repo
-  apt_repository: repo='deb https://region-a.geo-1.objects.hpcloudsvc.com/v1/46995959297574/mini-mon/public_repo precise release' state=present
-
 - name: Install monasca-api
   apt: name=monasca-api state=latest
   notify:
