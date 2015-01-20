@@ -95,16 +95,16 @@ server:
       port: {{ monasca_api_client_port }}
       maxRequestHeaderSize: 16KiB  # Allow large headers used by keystone tokens
   requestLog:
-   timeZone: UTC
-   appenders:
+   timeZone:UTC
+  appenders:
     - type: file
       currentLogFilename: {{monasca_log_dir}}/request.log
       threshold: ALL
       archive: true
       archivedLogFilenamePattern: {{monasca_log_dir}}/request-%d.log.gz
       archivedFileCount: 5
-     
-     
+      timeZone: UTC
+      logFormat: # TODO
 
 # Logging settings.
 logging:
