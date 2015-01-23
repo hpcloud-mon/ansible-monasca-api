@@ -11,7 +11,7 @@ metricsTopic: metrics
 eventsTopic: events
 
 kafka:
-  brokerUris: 
+  brokerUris:
 {% for host in kafka_hosts.split(',') %}
     - {{host}}
 {% endfor %}
@@ -54,7 +54,7 @@ vertica:
   validationQuery: "/* MyService Health Check */ SELECT 1"
   minSize: 4
   maxSize: 32
-  checkConnectionWhileIdle: false  
+  checkConnectionWhileIdle: false
 
 middleware:
   enabled: true
