@@ -1,23 +1,35 @@
 ---
 - name: setup group
   group: name={{monasca_group}} system=yes
+
 - name: Setup user
   user: name={{api_user}} system=yes group={{monasca_group}}
 
-- name: Install monasca-api
-  apt: name=monasca-api state=latest
+- name: create jar_dir
+  file: path={{monasca_jar_dir}} state=directory owner=root group=root mode=755
+
+- name: Fetch api jar
+  get_url: dest={{monasca_jar_dir}}/monasca-api.jar url="{{monasca_api_tarball_base_url}}/monasca-api-{{monasca_api_version}}-shaded.jar" force=yes
   notify:
     - restart monasca-api
 
-# As this is still distributed with a deb the upstart script comes with the deb so only the systemd script is here
 - name: create systemd config
   copy: dest={{api_systemd_service}} owner=root group=root mode=644 src=monasca-api.service
   notify:
     - restart monasca-api
   when: ansible_distribution_release != 'trusty'
 
+- name: create service script from template
+  template: dest=/etc/init/monasca-api.conf owner=root group=root mode=744 src=monasca-api.conf.j2
+  notify:
+    - restart monasca-api
+  when: ansible_distribution_release == 'trusty'
+
 - name: create log_dir
   file: path={{monasca_log_dir}} state=directory owner=root group={{monasca_group}} mode=775
+
+- name: create conf_dir
+  file: path={{monasca_conf_dir}} state=directory owner=root group={{monasca_group}} mode=775
 
 - name: create conf_file from template
   template: dest={{api_conf_file}} owner={{api_user}} group={{monasca_group}} mode=640 src=api-config.yml.j2
