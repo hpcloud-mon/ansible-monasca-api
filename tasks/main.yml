@@ -13,17 +13,28 @@
   notify:
     - restart monasca-api
 
+- name: Detect if this is a systemd based system
+  command: cat /proc/1/comm
+  register: init
+- set_fact: use_systemd=True
+  when: init.stdout == 'systemd'
+- set_fact: use_systemd=False
+  when: init.stdout != 'systemd'
+
 - name: create systemd config
   copy: dest={{api_systemd_service}} owner=root group=root mode=644 src=monasca-api.service
   notify:
     - restart monasca-api
-  when: ansible_distribution_release != 'trusty'
+  when: use_systemd
 
-- name: create service script from template
+- command: systemctl daemon-reload
+  when: use_systemd
+
+- name: create upstart script from template
   template: dest=/etc/init/monasca-api.conf owner=root group=root mode=744 src=monasca-api.conf.j2
   notify:
     - restart monasca-api
-  when: ansible_distribution_release == 'trusty'
+  when: not use_systemd
 
 - name: create log_dir
   file: path={{monasca_log_dir}} state=directory owner=root group={{monasca_group}} mode=775
