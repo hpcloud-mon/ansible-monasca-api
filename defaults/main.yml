@@ -14,4 +14,5 @@ monasca_api_keystore_password:
 monasca_api_tarball_base_url: http://tarballs.openstack.org/ci/monasca-api
 monasca_api_version: 1.0.0-SNAPSHOT
 monasca_log_dir: /var/log/monasca
+monasca_jar_dir: /opt/monasca
 mysql_db: mon
