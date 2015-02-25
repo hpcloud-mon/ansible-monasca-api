@@ -16,3 +16,5 @@ monasca_api_version: 1.0.0-SNAPSHOT
 monasca_log_dir: /var/log/monasca
 monasca_jar_dir: /opt/monasca
 mysql_db: mon
+
+skip_install: False

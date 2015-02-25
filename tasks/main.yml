@@ -12,6 +12,7 @@
   get_url: dest={{monasca_jar_dir}}/monasca-api.jar url="{{monasca_api_tarball_base_url}}/monasca-api-{{monasca_api_version}}-shaded.jar" force=yes
   notify:
     - restart monasca-api
+  when: not skip_install
 
 - name: Detect if this is a systemd based system
   command: cat /proc/1/comm
