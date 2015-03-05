@@ -18,3 +18,4 @@ monasca_jar_dir: /opt/monasca
 mysql_db: mon
 
 skip_install: False
+verify: True

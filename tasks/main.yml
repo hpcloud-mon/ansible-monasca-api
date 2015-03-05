@@ -73,3 +73,4 @@
 
 - name: wait for api port
   wait_for: port={{monasca_api_client_port}} state=started timeout=10
+  when: verify
