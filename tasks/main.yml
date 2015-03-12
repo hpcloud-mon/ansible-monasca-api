@@ -72,5 +72,5 @@
   service: name=monasca-api state=started enabled=yes
 
 - name: wait for api port
-  wait_for: port={{monasca_api_client_port}} state=started timeout=10
+  wait_for: port={{monasca_api_client_port}} host={{monasca_api_bind_host | default(127.0.0.1) }} state=started timeout=10
   when: verify
