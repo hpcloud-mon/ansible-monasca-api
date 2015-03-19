@@ -1,6 +1,10 @@
 # The region for which all metrics passing through this server will be persisted
 region: {{api_region}}
 
+{% if influxdb_version | version_compare( '0.9', '>=') %}
+maxQueryLimit: 10000
+{% endif %}
+
 # Whether this server is running on a secure port
 accessedViaHttps: false
 
@@ -38,6 +42,15 @@ databaseConfiguration:
 
 # Uncomment if databaseType is influxDB
 influxDB:
+{% if influxdb_version | version_compare( '0.9', '>=') %}
+  version: V9
+  # Retention policy may be left blank to indicate default policy.
+  retentionPolicy:
+  # Used only if version is V9.
+  maxHttpConnections: 100
+{% else %}
+  version: V8
+{% endif %}
   name: {{influxdb_db}}
   url: {{influxdb_url}}
   user: {{influxdb_user}}

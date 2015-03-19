@@ -6,6 +6,7 @@ Installs the [monasca-api](https://github.com/stackforge/monasca-api) part of th
 - influxdb_url
 - influxdb_user
 - influxdb_password
+- influxdb_version
 - kafka_hosts - comma separated list of host:port combinations
 - keystone_host
 - keystone_admin
