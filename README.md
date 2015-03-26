@@ -19,6 +19,7 @@ Installs the [monasca-api](https://github.com/stackforge/monasca-api) part of th
 ##Optional parameters
 These all default to an empty value
 - keystone_admin_token
+- keystone_admin_project
 
 There is a truststore used by the application for any certificate authorities that must be trusted. Additionally there is a client
 keystore for any ssl keys needed for client authentication. Most importantly there is a standard keystore used for serving the api
