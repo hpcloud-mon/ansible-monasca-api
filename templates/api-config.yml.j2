@@ -92,7 +92,11 @@ middleware:
   adminUser: {{keystone_admin}}
   adminPassword: {{keystone_admin_password}}
   adminProjectId:
+{% if keystone_admin_project is defined %}
+  adminProjectName: {{keystone_admin_project}}
+{% else %}
   adminProjectName:
+{% endif %}
   adminToken: {{keystone_admin_token}}
   timeToCacheToken: 600
   maxTokenCacheSize: 1048576
