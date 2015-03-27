@@ -5,7 +5,7 @@
 - name: Setup user
   user: name={{api_user}} system=yes group={{monasca_group}}
 
-- name: create jar_dir
+- name: create jar dir
   file: path={{monasca_jar_dir}} state=directory owner=root group=root mode=755
 
 - name: Fetch api jar
@@ -37,8 +37,11 @@
     - restart monasca-api
   when: not use_systemd
 
-- name: create log_dir
+- name: create monasca log dir
   file: path={{monasca_log_dir}} state=directory owner=root group={{monasca_group}} mode=775
+
+- name: create api log dir
+  file: path={{api_log_dir}} state=directory owner=root group={{monasca_group}} mode=775
 
 - name: create conf_dir
   file: path={{monasca_conf_dir}} state=directory owner=root group={{monasca_group}} mode=775

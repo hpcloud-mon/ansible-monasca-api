@@ -120,10 +120,10 @@ server:
    timeZone: UTC
    appenders:
     - type: file
-      currentLogFilename: {{monasca_log_dir}}/request.log
+      currentLogFilename: {{api_log_dir}}/request.log
       threshold: ALL
       archive: true
-      archivedLogFilenamePattern: {{monasca_log_dir}}/request-%d.log.gz
+      archivedLogFilenamePattern: {{api_log_dir}}/request-%d.log.gz
       archivedFileCount: 5
 
 # Logging settings.
@@ -146,10 +146,10 @@ logging:
       logFormat: # TODO
 
     - type: file
-      currentLogFilename: {{monasca_log_dir}}/monasca-api.log
+      currentLogFilename: {{api_log_dir}}/monasca-api.log
       threshold: ALL
       archive: true
-      archivedLogFilenamePattern: {{monasca_log_dir}}/monasca-api-%d.log.gz
+      archivedLogFilenamePattern: {{api_log_dir}}/monasca-api-%d.log.gz
       archivedFileCount: 5
       timeZone: UTC
       logFormat: # TODO
