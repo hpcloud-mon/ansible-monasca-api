@@ -3,7 +3,7 @@
   group: name={{monasca_group}} system=yes
 
 - name: Setup user
-  user: name={{api_user}} system=yes group={{monasca_group}}
+  user: name={{monasca_api_user}} system=yes group={{monasca_group}}
 
 - name: create jar dir
   file: path={{monasca_jar_dir}} state=directory owner=root group=root mode=755
@@ -47,7 +47,7 @@
   file: path={{monasca_conf_dir}} state=directory owner=root group={{monasca_group}} mode=775
 
 - name: create conf_file from template
-  template: dest={{api_conf_file}} owner={{api_user}} group={{monasca_group}} mode=640 src=api-config.yml.j2
+  template: dest={{api_conf_file}} owner={{monasca_api_user}} group={{monasca_group}} mode=640 src=api-config.yml.j2
   notify:
     - restart monasca-api
 
