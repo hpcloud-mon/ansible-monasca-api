@@ -23,7 +23,7 @@
   when: init.stdout != 'systemd'
 
 - name: create systemd config
-  copy: dest={{api_systemd_service}} owner=root group=root mode=644 src=monasca-api.service
+  template: dest={{api_systemd_service}} owner=root group=root mode=644 src=monasca-api.service.j2
   notify:
     - restart monasca-api
   when: use_systemd
