@@ -69,10 +69,10 @@
   notify:
     - restart monasca-api
 
-- meta: flush_handlers
-
 - name: Enable monasca-api
   service: name=monasca-api state=started enabled=yes
+
+- meta: flush_handlers
 
 - name: wait for api port
   wait_for: port={{monasca_api_client_port}} host={{monasca_api_bind_host | default('127.0.0.1') }} state=started timeout=10
