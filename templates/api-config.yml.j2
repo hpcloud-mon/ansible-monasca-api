@@ -111,6 +111,12 @@ server:
 {% endif %}
       port: {{ monasca_api_client_port }}
       maxRequestHeaderSize: 16KiB  # Allow large headers used by keystone tokens
+  adminConnectors:
+    - type: http
+      port: {{ monasca_admin_client_port }}
+{% if monasca_api_admin_bind_host is defined %}
+      bindHost: {{ monasca_api_admin_bind_host }}
+{% endif %}
   requestLog:
    timeZone: UTC
    appenders:
