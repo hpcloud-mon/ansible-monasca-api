@@ -16,9 +16,12 @@ Installs the [monasca-api](https://github.com/stackforge/monasca-api) part of th
 - zookeeper_hosts - comma separated list of host:port combinations
 
 ##Optional parameters
-These all default to an empty value
-- keystone_admin_token
-- keystone_admin_project
+- keystone_admin_token - defaults to empty value
+- keystone_admin_project - defaults to empty value
+- monasca_api_client_port - the port the API listens on, default is 8080
+- monasca_api_bind_host - if set, the port the API listens on is bound to this host or ip address
+- monasca_admin_client_port - the port the admin connector listens on, default is 8081
+- monasca_api_admin_bind_host - if set, the port the admin connector listens on is bound to this host or ip address
 
 There is a truststore used by the application for any certificate authorities that must be trusted. Additionally there is a client
 keystore for any ssl keys needed for client authentication. Most importantly there is a standard keystore used for serving the api
