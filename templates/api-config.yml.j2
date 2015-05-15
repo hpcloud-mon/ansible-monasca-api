@@ -55,9 +55,9 @@ influxDB:
 # As of 7/10 there is a bug in the monasca-api that requires this section even if databaseType is set to influxdb
 vertica:
   driverClass: com.vertica.jdbc.Driver
-  url: {{ vertica_url }}
+  url: {{ vertica_url | default('jdbc:vertica://localhost:5433/mon')}}
   user: dbadmin
-  password: {{ vertica_dbadmin_password }}
+  password: {{ vertica_dbadmin_password | default('password')}}
   maxWaitForConnection: 1s
   validationQuery: "/* MyService Health Check */ SELECT 1"
   minSize: 4
