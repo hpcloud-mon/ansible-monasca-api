@@ -38,7 +38,7 @@ mysql:
   checkConnectionOnBorrow: true
 
 databaseConfiguration:
-  databaseType: influxdb
+  databaseType: {{ database_type }} 
 
 # Uncomment if databaseType is influxDB
 influxDB:
@@ -55,9 +55,9 @@ influxDB:
 # As of 7/10 there is a bug in the monasca-api that requires this section even if databaseType is set to influxdb
 vertica:
   driverClass: com.vertica.jdbc.Driver
-  url: jdbc:vertica://localhost/mon
+  url: {{ vertica_url }}
   user: dbadmin
-  password: password
+  password: {{ vertica_dbadmin_password }}
   maxWaitForConnection: 1s
   validationQuery: "/* MyService Health Check */ SELECT 1"
   minSize: 4
