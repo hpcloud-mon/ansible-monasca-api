@@ -51,13 +51,25 @@ influxDB:
   user: {{influxdb_user}}
   password: {{influxdb_password}}
 
+{% set vertica_api_user = [] %}
+{% for item in vertica_users %}
+{% if item.role == 'monasca_api'%}
+{% if vertica_api_user.append(item) %}{% endif %}
+{% endif %}
+{% endfor %}
+
 # Uncomment if databaseType is vertica
 # As of 7/10 there is a bug in the monasca-api that requires this section even if databaseType is set to influxdb
 vertica:
   driverClass: com.vertica.jdbc.Driver
   url: {{ vertica_url | default('jdbc:vertica://localhost:5433/mon')}}
-  user: dbadmin
-  password: {{ vertica_dbadmin_password | default('password')}}
+{% if vertica_api_user|count == 0%}
+  user: mon_api
+  password: password
+{% else %}
+  user: {{ vertica_api_user[0].username }}
+  password: {{ vertica_api_user[0].password }}
+{% endif %}
   maxWaitForConnection: 1s
   validationQuery: "/* MyService Health Check */ SELECT 1"
   minSize: 4
