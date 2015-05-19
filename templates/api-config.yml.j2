@@ -52,11 +52,13 @@ influxDB:
   password: {{influxdb_password}}
 
 {% set vertica_api_user = [] %}
+{% if vertica_users is defined %}
 {% for item in vertica_users %}
 {% if item.role == 'monasca_api'%}
 {% if vertica_api_user.append(item) %}{% endif %}
 {% endif %}
 {% endfor %}
+{% endif %}
 
 # Uncomment if databaseType is vertica
 # As of 7/10 there is a bug in the monasca-api that requires this section even if databaseType is set to influxdb
