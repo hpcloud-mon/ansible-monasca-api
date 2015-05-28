@@ -21,9 +21,20 @@ monasca_wait_for_period: 10
 monasca_log_dir: /var/log/monasca
 monasca_log_level: WARN
 monasca_jar_dir: /opt/monasca
-mysql_db: mon
+database_name: mon
 database_type: influxdb
+hibernate_support_enabled: "false"
+database_port: 3306
+database_host: 192.168.10.4
+database_user: monapi
+database_password: password
+driver_class: org.postgresql.ds.PGPoolingDataSource
 
 run_mode: Deploy
 skip_install: False
 verify: True
+
+defaultAuthorizedRoles: [user, domainuser, domainadmin, monasca-user]
+agentAuthorizedRoles: [monasca-agent]
+
+mon_api_wait_timeout: 60

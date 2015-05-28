@@ -25,9 +25,9 @@ kafka:
 
 mysql:
   driverClass: com.mysql.jdbc.Driver
-  url: "jdbc:mysql://{{mysql_host}}:3306/{{mysql_db}}?connectTimeout=5000&autoReconnect=true&useSSL=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
-  user: "{{mysql_user}}"
-  password: "{{mysql_password}}"
+  url: jdbc:mysql://{{database_host}}:3306/{{database_name}}?connectTimeout=5000&autoReconnect=true&useSSL=true&useLegacyDatetimeCode=false
+  user: {{database_user}}
+  password: {{database_password}}
   maxWaitForConnection: 1s
   validationQuery: "/* MyService Health Check */ SELECT 1"
   minSize: 8
@@ -93,8 +93,8 @@ middleware:
   connPoolMinIdleTime: 600000
   connRetryTimes: 2
   connRetryInterval: 50
-  defaultAuthorizedRoles: [user, domainuser, domainadmin, monasca-user, admin]
-  agentAuthorizedRoles: [monasca-agent]
+  defaultAuthorizedRoles: {{ defaultAuthorizedRoles }}
+  agentAuthorizedRoles: {{ agentAuthorizedRoles }}
   adminAuthMethod: {{keystone_auth_method}}
   adminUser: "{{keystone_admin}}"
   adminPassword: "{{keystone_admin_password}}"
