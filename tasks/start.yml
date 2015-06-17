@@ -1,5 +1,5 @@
 ---
-- name: Start and enable monasca-Api
+- name: Start and enable monasca-api
   service: name=monasca-api state=started enabled=yes
 
 - name: wait for api port
