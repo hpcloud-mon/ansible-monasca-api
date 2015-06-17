@@ -23,6 +23,7 @@ Installs the [monasca-api](https://github.com/stackforge/monasca-api) part of th
 - monasca_admin_client_port - the port the admin connector listens on, default is 8081
 - monasca_api_admin_bind_host - if set, the port the admin connector listens on is bound to this host or ip address
 - monasca_log_level - Log level for the API log. Default to WARN
+- run_mode - One of Deploy, Stop, Install, Start, or Use. The default is Deploy which will do Install, Configure, then Start.
 
 There is a truststore used by the application for any certificate authorities that must be trusted. Additionally there is a client
 keystore for any ssl keys needed for client authentication. Most importantly there is a standard keystore used for serving the api
