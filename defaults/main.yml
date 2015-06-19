@@ -21,5 +21,6 @@ monasca_jar_dir: /opt/monasca
 mysql_db: mon
 database_type: influxdb
 
+run_mode: Deploy
 skip_install: False
 verify: True

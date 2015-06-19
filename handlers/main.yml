@@ -1,3 +1,4 @@
 ---
 - name: restart monasca-api
   service: name=monasca-api state=restarted
+  when: run_mode == 'Deploy'
