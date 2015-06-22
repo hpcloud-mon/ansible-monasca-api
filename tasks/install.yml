@@ -3,10 +3,6 @@
   file: path={{monasca_jar_dir}} state=directory owner=root group=root mode=755
 
 - name: Fetch api jar
-  get_url: dest={{monasca_jar_dir}}/monasca-api.jar url="{{monasca_api_tarball_base_url}}/monasca-api-{{monasca_api_version}}-shaded.jar" force=yes timeout=30
-  register: get_url_result
-  until: "'OK' in get_url_result.msg"
-  retries: 5
-  delay: 1
+  get_url: dest={{monasca_jar_dir}}/monasca-api.jar url="{{monasca_api_tarball_base_url}}/monasca-api-{{monasca_api_version}}-shaded.jar" force=yes
   notify:
     - restart monasca-api
