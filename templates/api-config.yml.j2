@@ -1,9 +1,7 @@
 # The region for which all metrics passing through this server will be persisted
 region: {{api_region}}
 
-{% if influxdb_version | version_compare( '0.9', '>=') %}
 maxQueryLimit: 10000
-{% endif %}
 
 # Whether this server is running on a secure port
 accessedViaHttps: false
