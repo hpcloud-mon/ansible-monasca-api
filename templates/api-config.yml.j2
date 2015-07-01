@@ -1,5 +1,5 @@
 # The region for which all metrics passing through this server will be persisted
-region: {{api_region}}
+region: "{{api_region}}"
 
 maxQueryLimit: 10000
 
@@ -15,19 +15,19 @@ eventsTopic: events
 kafka:
   brokerUris:
 {% for host in kafka_hosts.split(',') %}
-    - {{host}}
+    - "{{host}}"
 {% endfor %}
   zookeeperUris:
 {% for host in zookeeper_hosts.split(',') %}
-    - {{host}}
+    - "{{host}}"
 {% endfor %}
   healthCheckTopic: healthcheck
 
 mysql:
   driverClass: com.mysql.jdbc.Driver
-  url: jdbc:mysql://{{mysql_host}}:3306/{{mysql_db}}?connectTimeout=5000&autoReconnect=true&useSSL=true&useLegacyDatetimeCode=false&serverTimezone=UTC
-  user: {{mysql_user}}
-  password: {{mysql_password}}
+  url: "jdbc:mysql://{{mysql_host}}:3306/{{mysql_db}}?connectTimeout=5000&autoReconnect=true&useSSL=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
+  user: "{{mysql_user}}"
+  password: "{{mysql_password}}"
   maxWaitForConnection: 1s
   validationQuery: "/* MyService Health Check */ SELECT 1"
   minSize: 8
@@ -36,7 +36,7 @@ mysql:
   checkConnectionOnBorrow: true
 
 databaseConfiguration:
-  databaseType: {{ database_type }} 
+  databaseType: "{{ database_type }}"
 
 # Uncomment if databaseType is influxDB
 influxDB:
@@ -44,10 +44,10 @@ influxDB:
   retentionPolicy:
   maxHttpConnections: 100
   gzip: true
-  name: {{influxdb_db}}
-  url: {{influxdb_url}}
-  user: {{influxdb_user}}
-  password: {{influxdb_password}}
+  name: "{{influxdb_db}}"
+  url: "{{influxdb_url}}"
+  user: "{{influxdb_user}}"
+  password: "{{influxdb_password}}"
 
 {% set vertica_api_user = [] %}
 {% if vertica_users is defined %}
@@ -62,13 +62,13 @@ influxDB:
 # As of 7/10 there is a bug in the monasca-api that requires this section even if databaseType is set to influxdb
 vertica:
   driverClass: com.vertica.jdbc.Driver
-  url: {{ vertica_url | default('jdbc:vertica://localhost:5433/mon')}}
+  url: "{{ vertica_url | default('jdbc:vertica://localhost:5433/mon')}}"
 {% if vertica_api_user|count == 0%}
   user: mon_api
   password: password
 {% else %}
-  user: {{ vertica_api_user[0].username }}
-  password: {{ vertica_api_user[0].password }}
+  user: "{{ vertica_api_user[0].username }}"
+  password: "{{ vertica_api_user[0].password }}"
 {% endif %}
   maxWaitForConnection: 1s
   validationQuery: "/* MyService Health Check */ SELECT 1"
@@ -78,15 +78,15 @@ vertica:
 
 middleware:
   enabled: true
-  serverVIP: {{keystone_host}}
+  serverVIP: "{{keystone_host}}"
   serverPort: {{keystone_port}}
   useHttps: {{keystone_use_https}}
-  truststore: {{monasca_api_truststore}}
-  truststorePassword: {{monasca_api_truststore_password}}
+  truststore: "{{monasca_api_truststore}}"
+  truststorePassword: "{{monasca_api_truststore_password}}"
   connTimeout: 500
   connSSLClientAuth: {{keystone_client_auth}}
-  keystore: {{monasca_api_client_keystore}}
-  keystorePassword: {{monasca_api_client_keystore_password}}
+  keystore: "{{monasca_api_client_keystore}}"
+  keystorePassword: "{{monasca_api_client_keystore_password}}"
   connPoolMaxActive: 3
   connPoolMaxIdle: 3
   connPoolEvictPeriod: 600000
@@ -96,15 +96,15 @@ middleware:
   defaultAuthorizedRoles: [user, domainuser, domainadmin, monasca-user]
   agentAuthorizedRoles: [monasca-agent]
   adminAuthMethod: {{keystone_auth_method}}
-  adminUser: {{keystone_admin}}
-  adminPassword: {{keystone_admin_password}}
+  adminUser: "{{keystone_admin}}"
+  adminPassword: "{{keystone_admin_password}}"
   adminProjectId:
 {% if keystone_admin_project is defined %}
-  adminProjectName: {{keystone_admin_project}}
+  adminProjectName: "{{keystone_admin_project}}"
 {% else %}
   adminProjectName:
 {% endif %}
-  adminToken: {{keystone_admin_token}}
+  adminToken: "{{keystone_admin_token}}"
   timeToCacheToken: 600
   maxTokenCacheSize: 1048576
 
@@ -112,14 +112,14 @@ server:
   applicationConnectors:
 {% if monasca_api_keystore is defined %}
     - type: https
-      keyStorePath: {{ monasca_api_keystore }}
-      keyStorePassword: {{ monasca_api_keystore_password }}
+      keyStorePath: "{{ monasca_api_keystore }}"
+      keyStorePassword: "{{ monasca_api_keystore_password }}"
       validateCerts: false
 {% else %}
     - type: http
 {% endif %}
 {% if monasca_api_bind_host is defined %}
-      bindHost: {{ monasca_api_bind_host }}
+      bindHost: "{{ monasca_api_bind_host }}"
 {% endif %}
       port: {{ monasca_api_client_port }}
       maxRequestHeaderSize: 16KiB  # Allow large headers used by keystone tokens
@@ -127,16 +127,16 @@ server:
     - type: http
       port: {{ monasca_admin_client_port }}
 {% if monasca_api_admin_bind_host is defined %}
-      bindHost: {{ monasca_api_admin_bind_host }}
+      bindHost: "{{ monasca_api_admin_bind_host }}"
 {% endif %}
   requestLog:
    timeZone: UTC
    appenders:
     - type: file
-      currentLogFilename: {{api_log_dir}}/request.log
+      currentLogFilename: "{{api_log_dir}}/request.log"
       threshold: ALL
       archive: true
-      archivedLogFilenamePattern: {{api_log_dir}}/request-%d.log.gz
+      archivedLogFilenamePattern: "{{api_log_dir}}/request-%d.log.gz"
       archivedFileCount: 5
 
 # Logging settings.
