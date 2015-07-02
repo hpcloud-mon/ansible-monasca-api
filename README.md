@@ -2,7 +2,7 @@
 Installs the [monasca-api](https://github.com/stackforge/monasca-api) part of the [Monasca](https://wiki.openstack.org/wiki/Monasca) project.
 
 ##Requirements
-- api_region 
+- api_region
 - influxdb_url
 - influxdb_user
 - influxdb_password
@@ -41,7 +41,7 @@ via ssl.
 
 The keystore and truststore's are jks files and created by command such as these examples:
 
-    # Change from pem to pkcs12 format 
+    # Change from pem to pkcs12 format
     openssl pkcs12 -export -in orig.pem -inkey orig.key -out new.p12 -name fqdn -chain -CAfile cacert.pem -password pass:password
     # Create the jks keystore
     keytool -importkeystore -deststorepass password -destkeystore ./keystore.jks -srckeystore new.p12 -srcstoretype PKCS12 -srcstorepass password
