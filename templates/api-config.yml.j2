@@ -159,10 +159,10 @@ logging:
       logFormat: # TODO
 
     - type: file
-      currentLogFilename: {{api_log_dir}}/monasca-api.log
+      currentLogFilename: "{{api_log_dir}}/monasca-api.log"
       threshold: ALL
       archive: true
-      archivedLogFilenamePattern: {{api_log_dir}}/monasca-api-%d.log.gz
+      archivedLogFilenamePattern: "{{api_log_dir}}/monasca-api-%d.log.gz"
       archivedFileCount: 5
       timeZone: UTC
       logFormat: # TODO
