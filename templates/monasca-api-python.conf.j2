@@ -1,0 +1,9 @@
+# Startup script for the mon-persister
+
+description "Monasca Api"
+start on runlevel [2345]
+
+console log
+respawn
+
+exec gunicorn -k eventlet --worker-connections=2000 --backlog=1000 --paste /etc/monasca/api-config.ini --name monasca-api -D

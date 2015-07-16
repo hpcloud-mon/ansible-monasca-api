@@ -7,6 +7,7 @@ keystone_use_https: false
 keystone_client_auth: false
 monasca_admin_client_port: 8081
 monasca_api_client_port: 8080
+monasca_api_bind_host: 192.168.10.4
 monasca_api_client_keystore:
 monasca_api_client_keystore_password:
 monasca_api_java_opts: -Xmx1g
@@ -25,3 +26,6 @@ database_type: influxdb
 run_mode: Deploy
 skip_install: False
 verify: True
+
+monasca_api_java: True
+monasca_virtualenv_dir: /opt/monasca

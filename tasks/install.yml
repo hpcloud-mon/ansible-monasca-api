@@ -1,8 +1,6 @@
 ---
-- name: create jar dir
-  file: path={{monasca_jar_dir}} state=directory owner=root group=root mode=755
+- include: java_install.yml
+  when: monasca_api_java
 
-- name: Fetch api jar
-  get_url: dest={{monasca_jar_dir}}/monasca-api.jar url="{{monasca_api_tarball_base_url}}/monasca-api-{{monasca_api_version}}-shaded.jar" force=yes
-  notify:
-    - restart monasca-api
+- include: python_install.yml
+  when: not monasca_api_java

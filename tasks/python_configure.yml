@@ -1,0 +1,26 @@
+---
+- name: create conf_file from template
+  template: dest={{api_python_conf_file}} owner={{api_user}} group={{monasca_group}} mode=640 src=api.conf.j2
+  notify:
+    - restart monasca-api
+
+- name: create ini_file from template
+  template: dest={{api_python_ini_file}} owner={{api_user}} group={{monasca_group}} mode=640 src=api-config.ini
+  notify:
+    - restart monasca-api
+
+- name: create upstart script from template
+  template: dest={{api_upstart_conf}} owner=root group=root mode=644 src=monasca-api-python.conf.j2
+  notify:
+    - restart monasca-api
+  when: not use_systemd
+
+- name: create systemd config from template
+  template: dest={{api_systemd_service}} owner=root group=root mode=644 src=monasca-api-python.service.j2
+  notify:
+    - restart monasca-api
+  when: use_systemd
+
+- command: systemctl daemon-reload
+  when: use_systemd
+

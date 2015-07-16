@@ -1,0 +1,13 @@
+[Unit]
+Description=Monasca Api
+After=kafka.service influxdb.service
+
+[Service]
+Type=simple
+User={{ api_user }}
+Group={{ monasca_group }}
+Restart=on-failure
+ExecStart={{monasca_virtualenv_dir}}/bin/monasca-api --config-file {{ api_python_conf_file }}
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,12 @@
+---
+- name: apt install libmysqlclient-dev
+  apt: name=libmysqlclient-dev state=present
+
+- name: Install deps to avoid pip doing compilation or enable it
+  pip: name={{item}} state=present
+  with_items: dependencies
+
+- name: pip install monasca-api
+  pip: name=monasca-api
+  notify:
+    - restart monasca-api

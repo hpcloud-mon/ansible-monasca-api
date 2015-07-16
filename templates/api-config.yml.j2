@@ -74,7 +74,7 @@ vertica:
   validationQuery: "/* MyService Health Check */ SELECT 1"
   minSize: 4
   maxSize: 32
-  checkConnectionWhileIdle: false
+  checkConnectionWhileIdle: true
 
 middleware:
   enabled: true
@@ -165,11 +165,4 @@ logging:
       archivedLogFilenamePattern: "{{api_log_dir}}/monasca-api-%d.log.gz"
       archivedFileCount: 5
       timeZone: UTC
-      logFormat: # TODO
-
-    - type: syslog
-      host: localhost
-      port: 514
-      facility: local0
-      threshold: ALL
       logFormat: # TODO

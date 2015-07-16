@@ -1,7 +1,38 @@
 ---
+dependencies:
+  - falcon
+  - gunicorn
+  - keystonemiddleware
+  - oslo.config
+  - oslo.middleware
+  - oslo.log
+  - oslo.serialization
+  - oslo.utils
+  - pastedeploy
+  - pbr
+  - python-dateutil
+  - six
+  - ujson
+  - pyparsing
+  - voluptuous
+  - MySQL-python==1.2.3
+  - influxdb
+  - eventlet
+  - kafka-python
+  - simplejson
+  - simport==0.2.dev16
+  - setproctitle
+
 monasca_api_user: mon-api
 monasca_conf_dir: /etc/monasca
 monasca_group: monasca
 api_log_dir: "{{ monasca_log_dir }}/api"
 api_conf_file: "{{ monasca_conf_dir }}/api-config.yml"
 api_systemd_service: /etc/systemd/system/monasca-api.service
+
+api_python_conf_file: "{{ monasca_conf_dir }}/api-config.conf"
+api_python_ini_file: "{{ monasca_conf_dir }}/api-config.ini"
+api_upstart_conf: /etc/init/monasca-api.conf
+
+api_user: mon-api
+monasca_group: monasca

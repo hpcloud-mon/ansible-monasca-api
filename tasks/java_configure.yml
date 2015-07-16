@@ -1,0 +1,36 @@
+---
+- name: create vertica dir
+  file: path={{monasca_jar_dir}}/vertica state=directory owner=root group=root mode=755
+  when: database_type == 'vertica'
+  register: create_directory
+
+- name: place vertica jdbc
+  command: cp {{vertica_jdbc_location}} {{monasca_jar_dir}}/vertica/vertica_jdbc.jar
+  when: create_directory|changed and database_type == 'vertica'
+
+- name: Ensure vertica jdbc permissions
+  file: path={{monasca_jar_dir}}/vertica/vertica_jdbc.jar mode=644
+  when: database_type == 'vertica'
+
+- name: create conf_file from template
+  template: dest={{api_conf_file}} owner={{monasca_api_user}} group={{monasca_group}} mode=640 src=api-config.yml.j2
+  notify:
+    - restart monasca-api
+
+- name: create systemd startup script from template
+  template: dest={{api_systemd_service}} owner=root group=root mode=644 src=monasca-api.service.j2
+  notify:
+    - restart monasca-api
+  when: use_systemd
+
+- command: systemctl daemon-reload
+  when: use_systemd
+
+- name: create upstart script from template
+  template: dest=/etc/init/monasca-api.conf owner=root group=root mode=744 src=monasca-api.conf.j2
+  notify:
+    - restart monasca-api
+  when: not use_systemd
+
+
+
