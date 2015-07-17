@@ -22,7 +22,7 @@
 - set_fact: use_systemd=False
   when: init.stdout != 'systemd'
 
-- set_fact: monasca_api_bind_host: "192.168.10.4"
+- set_fact: monasca_api_bind_host=192.168.10.4
   when: not monasca_api_java
 
 - include: java_configure.yml
