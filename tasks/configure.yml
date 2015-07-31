@@ -1,18 +1,26 @@
 ---
 - name: setup group
   group: name={{monasca_group}} system=yes
+  notify:
+    - monasca_api_config_change
 
 - name: Setup user
   user: name={{monasca_api_user}} system=yes group={{monasca_group}}
+  notify:
+    - monasca_api_config_change
 
 - name: create vertica dir
   file: path={{monasca_jar_dir}}/vertica state=directory owner=root group=root mode=755
   when: database_type == 'vertica'
   register: create_directory
+  notify:
+    - monasca_api_config_change
 
 - name: place vertica jdbc
   command: cp {{vertica_jdbc_location}} {{monasca_jar_dir}}/vertica/vertica_jdbc.jar
   when: create_directory|changed and database_type == 'vertica'
+  notify:
+    - monasca_api_config_change
 
 - name: Ensure vertica jdbc permissions
   file: path={{monasca_jar_dir}}/vertica/vertica_jdbc.jar mode=644
@@ -30,6 +38,8 @@
   template: dest={{api_systemd_service}} owner=root group=root mode=644 src=monasca-api.service.j2
   notify:
     - restart monasca-api
+    - monasca_api_config_change
+
   when: use_systemd
 
 - command: systemctl daemon-reload
@@ -39,38 +49,49 @@
   template: dest=/etc/init/monasca-api.conf owner=root group=root mode=744 src=monasca-api.conf.j2
   notify:
     - restart monasca-api
+    - monasca_api_config_change
   when: not use_systemd
 
 - name: create monasca log dir
   file: path={{monasca_log_dir}} state=directory owner=root group={{monasca_group}} mode=775
+  notify:
+    - monasca_api_config_change
 
 - name: create api log dir
   file: path={{api_log_dir}} state=directory owner=root group={{monasca_group}} mode=775
+  notify:
+    - monasca_api_config_change
 
 - name: create conf_dir
   file: path={{monasca_conf_dir}} state=directory owner=root group={{monasca_group}} mode=775
+  notify:
+    - monasca_api_config_change
 
 - name: create conf_file from template
   template: dest={{api_conf_file}} owner={{monasca_api_user}} group={{monasca_group}} mode=640 src=api-config.yml.j2
   notify:
     - restart monasca-api
+    - monasca_api_config_change
 
 - name: Copy Truststore
   copy: dest={{monasca_api_truststore}} src={{monasca_api_truststore_src}}
   when: monasca_api_truststore_src is defined
   notify:
     - restart monasca-api
+    - monasca_api_config_change
 
 - name: Copy Client Keystore
   copy: dest={{monasca_api_client_keystore}} src={{monasca_api_client_keystore_src}}
   when: monasca_api_client_keystore_src is defined
   notify:
     - restart monasca-api
+    - monasca_api_config_change
 
 - name: Copy Keystore
   copy: dest={{monasca_api_keystore}} src={{monasca_api_keystore_src}}
   when: monasca_api_keystore_src is defined
   notify:
     - restart monasca-api
+    - monasca_api_config_change
 
 - meta: flush_handlers
