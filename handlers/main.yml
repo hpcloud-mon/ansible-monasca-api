@@ -2,3 +2,7 @@
 - name: restart monasca-api
   service: name=monasca-api state=restarted
   when: run_mode == 'Deploy'
+
+- name: monasca_api_config_change
+  set_fact:
+    monasca_api_restart_required: true

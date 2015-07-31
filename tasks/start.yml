@@ -1,5 +1,9 @@
 ---
-- name: Start and enable monasca-api
+- name: monasca-api | restart | restart monasca-api service
+  service: name=monasca-api state=restarted enabled=yes
+  when: monasca_api_restart_required
+
+- name: monasca-api | start | start monasca-api service
   service: name=monasca-api state=started enabled=yes
 
 - name: wait for api port

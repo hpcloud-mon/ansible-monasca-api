@@ -25,3 +25,6 @@ database_type: influxdb
 run_mode: Deploy
 skip_install: False
 verify: True
+
+# flag to track restart requirement during reconfigure
+monasca_api_restart_required: false
