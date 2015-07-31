@@ -28,4 +28,3 @@ verify: True
 
 # flag to track restart requirement during reconfigure
 monasca_api_restart_required: false
-
