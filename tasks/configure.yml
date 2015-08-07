@@ -8,11 +8,15 @@
 - name: create vertica dir
   file: path={{monasca_jar_dir}}/vertica state=directory owner=root group=root mode=755
   when: database_type == 'vertica'
-  register: create_directory
+
+- name: check if vertica jar exists
+  stat: path={{vertica_jdbc_location}}
+  register: status
+  when: database_type == 'vertica'
 
 - name: place vertica jdbc
   command: cp {{vertica_jdbc_location}} {{monasca_jar_dir}}/vertica/vertica_jdbc.jar
-  when: create_directory|changed and database_type == 'vertica'
+  when: database_type == 'vertica' and not status.stat.exists
 
 - name: Ensure vertica jdbc permissions
   file: path={{monasca_jar_dir}}/vertica/vertica_jdbc.jar mode=644
