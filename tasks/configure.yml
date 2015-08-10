@@ -10,7 +10,7 @@
   when: database_type == 'vertica'
 
 - name: check if vertica jar exists
-  stat: path={{vertica_jdbc_location}}
+  stat: path={{monasca_jar_dir}}/vertica/vertica_jdbc.jar
   register: status
   when: database_type == 'vertica'
 
