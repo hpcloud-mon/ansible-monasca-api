@@ -1,4 +1,6 @@
 ---
+# ©Copyright 2015 Hewlett-Packard Development Company, L.P.
+
 influxdb_db: mon
 keystone_auth_method: password
 keystone_admin_token:

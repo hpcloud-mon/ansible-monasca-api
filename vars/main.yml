@@ -1,4 +1,6 @@
 ---
+# ©Copyright 2015 Hewlett-Packard Development Company, L.P.
+
 monasca_api_user: mon-api
 monasca_conf_dir: /etc/monasca
 monasca_group: monasca

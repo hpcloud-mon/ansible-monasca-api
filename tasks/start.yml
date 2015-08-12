@@ -1,4 +1,6 @@
 ---
+# ©Copyright 2015 Hewlett-Packard Development Company, L.P.
+
 - name: Start and enable monasca-api
   service: name=monasca-api state=started enabled=yes
 
