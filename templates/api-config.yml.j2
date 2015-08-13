@@ -138,6 +138,8 @@ server:
       archive: true
       archivedLogFilenamePattern: "{{api_log_dir}}/request-%d.log.gz"
       archivedFileCount: 5
+# Dropwizard 0.7.0 includes a version of Jetty with admin thread issues on large machines, this works around it
+  adminMaxThreads: {{ ansible_processor_vcpus * 2 }}
 
 # Logging settings.
 logging:
