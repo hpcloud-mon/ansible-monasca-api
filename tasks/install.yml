@@ -1,4 +1,6 @@
 ---
+# ©Copyright 2015 Hewlett-Packard Development Company, L.P.
+
 - name: create jar dir
   file: path={{monasca_jar_dir}} state=directory owner=root group=root mode=755
 
