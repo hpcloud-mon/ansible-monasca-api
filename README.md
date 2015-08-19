@@ -18,7 +18,7 @@ Installs the [monasca-api](https://github.com/stackforge/monasca-api) part of th
 ##Optional parameters
 - keystone_admin_token - defaults to empty value
 - keystone_admin_project - defaults to empty value
-- monasca_api_client_port - the port the API listens on, default is 8782
+- monasca_api_client_port - the port the API listens on, default is 8070
 - monasca_api_bind_host - if set, the port the API listens on is bound to this host or ip address
 - monasca_admin_client_port - the port the admin connector listens on, default is 8081
 - monasca_api_admin_bind_host - if set, the port the admin connector listens on is bound to this host or ip address

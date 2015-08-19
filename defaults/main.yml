@@ -8,7 +8,7 @@ keystone_port: 5000
 keystone_use_https: false
 keystone_client_auth: false
 monasca_admin_client_port: 8081
-monasca_api_client_port: 8782
+monasca_api_client_port: 8070
 monasca_api_client_keystore:
 monasca_api_client_keystore_password:
 monasca_api_java_opts: -Xmx1g
