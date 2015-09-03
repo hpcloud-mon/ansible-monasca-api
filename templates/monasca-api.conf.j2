@@ -8,4 +8,4 @@ respawn
 
 setgid {{ monasca_group }}
 setuid {{ monasca_api_user }}
-exec /usr/bin/java {{ monasca_api_java_opts }} -cp {{ monasca_jar_dir }}/monasca-api.jar:{{ monasca_jar_dir }}/vertica/vertica_jdbc.jar monasca.api.MonApiApplication server {{api_conf_file}}
+exec /usr/bin/java -Dfile.encoding=UTF-8 {{ monasca_api_java_opts }} -cp {{ monasca_jar_dir }}/monasca-api.jar:{{ monasca_jar_dir }}/vertica/vertica_jdbc.jar monasca.api.MonApiApplication server {{api_conf_file}}
