@@ -35,6 +35,19 @@ mysql:
   checkConnectionWhileIdle: false
   checkConnectionOnBorrow: true
 
+hibernate:
+  supportEnabled: {{hibernate_support_enabled}}
+  providerClass: com.zaxxer.hikari.hibernate.HikariConnectionProvider
+  dataSourceClassName: {{driver_class}}
+  serverName: {{database_host}}
+  portNumber: {{database_port}}
+  databaseName: {{database_name}}
+  user: {{database_user}}
+  password: {{database_password}}
+  initialConnections: 25
+  maxConnections: 100
+  autoConfig: validate
+
 databaseConfiguration:
   databaseType: "{{ database_type }}"
 
