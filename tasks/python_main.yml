@@ -1,0 +1,6 @@
+---
+# ©Copyright 2015 Hewlett-Packard Development Company, L.P.
+
+- name: python | set API bind host if not specified
+  set_fact: monasca_api_bind_host="{{ monasca_api_host }}"
+  when: not (monasca_api_bind_host | default(False))

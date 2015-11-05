@@ -1,0 +1,77 @@
+---
+# ©Copyright 2015 Hewlett-Packard Development Company, L.P.
+
+- name: python | update apt cache
+  apt: update_cache=yes cache_valid_time=3600
+
+- name: Upgrade pip in virtualenv
+  pip: name=pip state=latest virtualenv="{{monasca_virtualenv_dir}}"
+
+- name: python | install python packages
+  action: apt pkg={{ item }} state=latest
+  with_items:
+    - git
+    - python-dev
+    - libmysqlclient-dev
+
+- name: create python base dir
+  file: path={{ monasca_python_dir }} state=directory owner=root group=root mode=755
+
+- name: python | git clone monasca-api
+  git: >
+    repo=https://github.com/stackforge/monasca-api.git
+    dest={{ monasca_python_dir }}/monasca-api
+  notify:
+    - restart monasca-api
+  register: monasca_api_clone
+
+# example patch section to merge in monasca-api changes that are pending review
+
+#- name: python | create required patch for monasca-api
+#  shell: git fetch https://review.openstack.org/openstack/monasca-api refs/changes/18/240018/2 && git format-patch -1 --stdout FETCH_HEAD > 1.patch
+#  args:
+#    chdir: "{{ monasca_python_dir }}/monasca-api"
+#  when: (monasca_api_clone|changed)
+#
+#- name: python | apply required patch for monasca-api
+#  shell: git apply 1.patch
+#  args:
+#    chdir: "{{ monasca_python_dir }}/monasca-api"
+#  when: (monasca_api_clone|changed)
+
+# ---- end of patch section
+
+- name: python | create a source distribution
+  shell: python setup.py sdist
+  args:
+    chdir: "{{ monasca_python_dir }}/monasca-api"
+    creates: "{{ monasca_python_dir }}/monasca-api/dist"
+  register: monasca_api_sdist
+
+- name: python | register source distribution
+  shell: ls -td {{ monasca_python_dir }}/monasca-api/dist/monasca-api-*.tar.gz
+  register: monasca_api_src_dist
+  when: (monasca_api_sdist|changed)
+
+- name: python | pip install monasca-api
+  pip: >
+    name={{ monasca_api_src_dist.stdout }}
+    virtualenv={{ monasca_virtualenv_dir }}
+    extra_args='--pre --allow-all-external --allow-unverified simport'
+  notify:
+    - restart monasca-api
+  when: (monasca_api_sdist|changed)
+
+- name: python | find monasca_api in virtualenv
+  shell: find $(pwd)/lib -name monasca_api
+  args:
+    chdir: "{{ monasca_virtualenv_dir }}"
+  register: venv_monasca_api
+
+- name: python | symlink python API
+  file: >
+    src={{ venv_monasca_api.stdout }}
+    dest={{ monasca_python_dir }}/monasca_api
+    owner=root
+    group=root
+    state=link

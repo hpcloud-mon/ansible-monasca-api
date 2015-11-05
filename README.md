@@ -1,5 +1,7 @@
 #monasca-api
 Installs the [monasca-api](https://github.com/stackforge/monasca-api) part of the [Monasca](https://wiki.openstack.org/wiki/Monasca) project.
+There are two implementations of the API, one Java based and one Python based. This will install the Java based one by default. To install
+the python implementation rather than the java implementation, set the variable `monasca_api_java` to False.
 
 ##Requirements
 - api_region

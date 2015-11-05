@@ -1,6 +1,12 @@
 ---
 # ©Copyright 2015 Hewlett-Packard Development Company, L.P.
 
+- include: java_main.yml
+  when: monasca_api_java
+
+- include: python_main.yml
+  when: not monasca_api_java
+
 - include: stop.yml
   when: run_mode == 'Stop'
 

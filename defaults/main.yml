@@ -1,7 +1,11 @@
 ---
 # ©Copyright 2015 Hewlett-Packard Development Company, L.P.
 
+database_type: influxdb
 influxdb_db: mon
+cassandra_keyspace: mon
+keystone_admin: admin
+keystone_admin_tenant: admin
 keystone_auth_method: password
 keystone_admin_token:
 keystone_port: 5000
@@ -11,19 +15,40 @@ monasca_admin_client_port: 8081
 monasca_api_client_port: 8070
 monasca_api_client_keystore:
 monasca_api_client_keystore_password:
+monasca_api_java: True
 monasca_api_java_opts: -Xmx1g
+monasca_api_log_file: monasca-api.log
 monasca_api_truststore:
 monasca_api_truststore_password:
 monasca_api_keystore_password:
 monasca_api_tarball_base_url: http://tarballs.openstack.org/ci/monasca-api
 monasca_api_version: 1.1.0-SNAPSHOT
-monasca_wait_for_period: 10
+monasca_jar_dir: /opt/monasca
 monasca_log_dir: /var/log/monasca
 monasca_log_level: WARN
-monasca_jar_dir: /opt/monasca
+monasca_python_dir: /opt/monasca
+monasca_virtualenv_dir: /opt/monasca
+monasca_wait_for_period: 10
 mysql_db: mon
-database_type: influxdb
+
+# API Roles
+api_default_authorized_roles:
+  - user
+  - domainuser
+  - domainadmin
+  - monasca-user
+api_agent_authorized_roles:
+  - monasca-agent
+api_delegate_authorized_roles:
+  - admin
+
+# Python API specific
+api_gunicorn_version: 19.3.0
+api_gunicorn_worker_connections: 2000
+api_gunicorn_backlog: 1000
+api_gunicorn_workers: 1
 
 run_mode: Deploy
 skip_install: False
 verify: True
+api_debug: False
