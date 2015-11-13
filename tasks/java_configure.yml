@@ -1,0 +1,48 @@
+---
+# ©Copyright 2015 Hewlett-Packard Development Company, L.P.
+
+- name: java | create vertica dir
+  file: path={{monasca_jar_dir}}/vertica state=directory owner=root group=root mode=755
+  when: database_type == 'vertica'
+
+- name: java | check if vertica jar exists
+  stat: path={{monasca_jar_dir}}/vertica/vertica_jdbc.jar
+  register: status
+  when: database_type == 'vertica'
+
+- name: java | place vertica jdbc
+  command: cp {{vertica_jdbc_location}} {{monasca_jar_dir}}/vertica/vertica_jdbc.jar
+  when: database_type == 'vertica' and not status.stat.exists
+
+- name: java | Ensure vertica jdbc permissions
+  file: path={{monasca_jar_dir}}/vertica/vertica_jdbc.jar mode=644
+  when: database_type == 'vertica'
+
+- name: java | Detect if this is a systemd based system
+  command: cat /proc/1/comm
+  register: init
+- set_fact: use_systemd=True
+  when: init.stdout == 'systemd'
+- set_fact: use_systemd=False
+  when: init.stdout != 'systemd'
+
+- name: java | create systemd config
+  template: dest={{api_systemd_service}} owner=root group=root mode=644 src=monasca-api.service.j2
+  notify:
+    - restart monasca-api
+  when: use_systemd
+
+- name: java | systemctl daemon-reload
+  command: systemctl daemon-reload
+  when: use_systemd
+
+- name: java | create upstart script from template
+  template: dest=/etc/init/monasca-api.conf owner=root group=root mode=744 src=monasca-api.conf.j2
+  notify:
+    - restart monasca-api
+  when: not (use_systemd | bool)
+
+- name: java | create conf_file from template
+  template: dest={{api_conf_file}} owner={{monasca_api_user}} group={{monasca_group}} mode=640 src=api-config.yml.j2
+  notify:
+    - restart monasca-api

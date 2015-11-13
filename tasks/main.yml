@@ -1,11 +1,17 @@
 ---
 # ©Copyright 2015 Hewlett-Packard Development Company, L.P.
 
+- include: java_main.yml
+  when: monasca_api_java
+
+- include: python_main.yml
+  when: not (monasca_api_java | bool)
+
 - include: stop.yml
   when: run_mode == 'Stop'
 
 - include: install.yml
-  when: not skip_install and ( run_mode == 'Install' or run_mode == 'Deploy' )
+  when: not (skip_install | bool) and ( run_mode == 'Install' or run_mode == 'Deploy' )
 
 - include: configure.yml
   when: run_mode == 'Configure' or run_mode == 'Deploy'

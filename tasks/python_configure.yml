@@ -1,0 +1,48 @@
+---
+# ©Copyright 2015 Hewlett-Packard Development Company, L.P.
+
+- name: python | create api-config.conf from template
+  template: >
+    src=python.api-config.conf.j2
+    dest={{ monasca_conf_dir }}/api-config.conf
+    owner={{ monasca_api_user }}
+    group=root
+    mode=660
+  notify:
+    - restart monasca-api
+
+- name: python | symlink api-config.conf
+  file: >
+    src={{ monasca_conf_dir }}/api-config.conf
+    dest=/etc/api-config.conf
+    owner=root
+    group=root
+    state=link
+
+- name: python | create api-config.ini from template
+  template: >
+    src=python.api-config.ini.j2
+    dest={{ monasca_conf_dir }}/api-config.ini
+    owner={{ monasca_api_user }}
+    group=root
+    mode=660
+  notify:
+    - restart monasca-api
+
+- name: python | symlink api-config.ini
+  file: >
+    src={{ monasca_conf_dir }}/api-config.ini
+    dest=/etc/api-config.ini
+    owner=root
+    group=root
+    state=link
+
+- name: python | create upstart script from template
+  template: >
+    src=python.monasca-api.conf.j2
+    dest=/etc/init/monasca-api.conf
+    owner=root
+    group=root
+    mode=744
+  notify:
+    - restart monasca-api
