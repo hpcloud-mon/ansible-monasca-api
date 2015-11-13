@@ -22,7 +22,7 @@
   when: monasca_api_java
 
 - include: python_configure.yml
-  when: not monasca_api_java
+  when: not (monasca_api_java | bool)
 
 # --------
 

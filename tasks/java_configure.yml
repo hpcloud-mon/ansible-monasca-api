@@ -40,7 +40,7 @@
   template: dest=/etc/init/monasca-api.conf owner=root group=root mode=744 src=monasca-api.conf.j2
   notify:
     - restart monasca-api
-  when: not use_systemd
+  when: not (use_systemd | bool)
 
 - name: java | create conf_file from template
   template: dest={{api_conf_file}} owner={{monasca_api_user}} group={{monasca_group}} mode=640 src=api-config.yml.j2
