@@ -1,6 +1,7 @@
 [Unit]
 Description=Monasca Api
-After=kafka.service influxdb.service mysql.service
+Requires=network.target
+After=network.target kafka.service influxdb.service mysql.service
 
 [Service]
 Type=simple
