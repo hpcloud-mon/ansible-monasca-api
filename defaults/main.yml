@@ -38,3 +38,4 @@ defaultAuthorizedRoles: [user, domainuser, domainadmin, monasca-user]
 agentAuthorizedRoles: [monasca-agent]
 
 mon_api_wait_timeout: 60
+monasca_group: monasca
