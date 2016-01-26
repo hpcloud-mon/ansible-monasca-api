@@ -8,7 +8,7 @@
   user: name={{monasca_api_user}} system=yes group={{monasca_group}}
 
 - name: create vertica dir
-  file: path={{monasca_jar_dir}}/vertica state=directory owner=root group=root mode=755
+  file: path={{monasca_jar_dir}}/vertica state=directory owner=root group=root mode=0755
   when: database_type == 'vertica'
 
 - name: check if vertica jar exists
@@ -21,7 +21,7 @@
   when: database_type == 'vertica' and not status.stat.exists
 
 - name: Ensure vertica jdbc permissions
-  file: path={{monasca_jar_dir}}/vertica/vertica_jdbc.jar mode=644
+  file: path={{monasca_jar_dir}}/vertica/vertica_jdbc.jar mode=0644
   when: database_type == 'vertica'
 
 - name: Detect if this is a systemd based system
@@ -65,7 +65,7 @@
   when: (not use_systemd or firewalld is not defined or firewalld.rc != 0) and item.rc != 0
 
 - name: create systemd config
-  template: dest={{api_systemd_service}} owner=root group=root mode=644 src=monasca-api.service.j2
+  template: dest={{api_systemd_service}} owner=root group=root mode=0644 src=monasca-api.service.j2
   notify:
     - restart monasca-api
   when: use_systemd
@@ -74,22 +74,22 @@
   when: use_systemd
 
 - name: create upstart script from template
-  template: dest=/etc/init/monasca-api.conf owner=root group=root mode=744 src=monasca-api.conf.j2
+  template: dest=/etc/init/monasca-api.conf owner=root group=root mode=0744 src=monasca-api.conf.j2
   notify:
     - restart monasca-api
   when: not use_systemd
 
 - name: create monasca log dir
-  file: path={{monasca_log_dir}} state=directory owner=root group={{monasca_group}} mode=775
+  file: path={{monasca_log_dir}} state=directory owner=root group={{monasca_group}} mode=0775
 
 - name: create api log dir
-  file: path={{api_log_dir}} state=directory owner=root group={{monasca_group}} mode=775
+  file: path={{api_log_dir}} state=directory owner=root group={{monasca_group}} mode=0775
 
 - name: create conf_dir
-  file: path={{monasca_conf_dir}} state=directory owner=root group={{monasca_group}} mode=775
+  file: path={{monasca_conf_dir}} state=directory owner=root group={{monasca_group}} mode=0775
 
 - name: create conf_file from template
-  template: dest={{api_conf_file}} owner={{monasca_api_user}} group={{monasca_group}} mode=640 src=api-config.yml.j2
+  template: dest={{api_conf_file}} owner={{monasca_api_user}} group={{monasca_group}} mode=0640 src=api-config.yml.j2
   notify:
     - restart monasca-api
 
